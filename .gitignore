@@ -1,0 +1,15 @@
+*.py[co]
+__pycache__
+*.egg
+*.egg-info
+dist
+build
+eggs
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+.eggs
+.cache
+Makefile
