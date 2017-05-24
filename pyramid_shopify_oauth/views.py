@@ -41,9 +41,11 @@ def redirect_view(request):
     shop = params['shop']
 
     session = shopify.Session(shop)
-    token = session.request_token(params)
+    session.request_token(params)
+
     shopify.ShopifyResource.activate_session(session)
 
     home_url = request.registry.settings['shopify.oauth.app_home']
+    request.session['shopify_session'] = session
 
     return HTTPFound(location=home_url)

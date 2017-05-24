@@ -14,6 +14,16 @@ def config_shopify(config):
     shopify.Session.setup(api_key=oauth_api_key, secret=oauth_secret)
 
 
+def get_shopify_session(request):
+    if 'shopify_session' in request.session:
+        import shopify
+        session = request.session['shopify_session']
+        shopify.ShopifyResource.activate_session(session)
+        return shopify
+
+    return None
+
+
 def includeme(config):
 
     if 'shopify.oauth.scope' not in config.registry.settings:
@@ -30,6 +40,8 @@ def includeme(config):
         'shopify.oauth.login_url',
         '/shopify_oauth_login_url'
     )
+
+    config.add_request_method(get_shopify_session, 'shopify', reify=True)
 
     config_shopify(config)
 
